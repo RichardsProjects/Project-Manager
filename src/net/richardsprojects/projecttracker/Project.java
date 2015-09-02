@@ -123,7 +123,7 @@ public class Project {
     		for(String incomeTransaction : incomeTransactionsList)
     		{
     			Date date = null;
-    			int income = 0;
+    			double income = 0;
     			try {
     				for (String line : Files.readAllLines(Paths.get(incomeTransactionsDirectory.getAbsolutePath() + File.separator + incomeTransaction))) {
     					if(line.contains("date: ")) {
@@ -136,7 +136,7 @@ public class Project {
     						String incomeStr = line;
     						incomeStr = incomeStr.replace("income: ", "");
     						
-    						income = Integer.parseInt(incomeStr);  
+    						income = Double.parseDouble(incomeStr);  
     					}
     				}					
     			} catch(Exception e) {
@@ -199,7 +199,7 @@ public class Project {
 		return true;
 	}
 	
-	public boolean addIncomeTransactionData(int income, Date date) {
+	public boolean addIncomeTransactionData(double money, Date date) {
 		File incomeFolder = new File(Main.dataDirectory.getAbsolutePath() + File.separator + projectName + File.separator + "income");
 		
 		//Calculate File name
@@ -218,10 +218,10 @@ public class Project {
 		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		try {
 			writer = new PrintWriter(incomeFolder.getAbsolutePath() + File.separator + tempName + ".txt", "UTF-8");
-			writer.println("income: " + income);
+			writer.println("income: " + money);
 			writer.println("date: " + sdf.format(date));
 			writer.close();
-			incomeTransactions.add(new IncomeTransaction(income, date));
+			incomeTransactions.add(new IncomeTransaction(money, date));
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "An error occured while attempting to save the data");
@@ -236,6 +236,7 @@ public class Project {
 		this.projectName = name;
 		this.projectType = type;
 		this.dateAdded = new Date();
+		this.projectStatus = ProjectStatus.IN_PROGRESS;
 		
 		//Create Folder & Data
 		File folder = new File(Main.dataDirectory.getAbsolutePath() + File.separator + name);
@@ -301,8 +302,8 @@ public class Project {
 		return time;
 	}
 	
-	public int getTotalIncome() {
-		int totalIncome = 0;
+	public double getTotalIncome() {
+		double totalIncome = 0;
 		
 		for(IncomeTransaction transaction : incomeTransactions) {
 			totalIncome = totalIncome + transaction.getIncome();
@@ -333,5 +334,57 @@ public class Project {
 			e.printStackTrace();
 			System.exit(0);
 		}
+	}
+	
+	public String getMonthlyTime() {
+		String time = "";
+		long hours = 0;
+		long minutes = 0;
+		long seconds = 0;
+		Date date = new Date();
+		
+		for(TimeSession session : timeSessions) {
+			Date startTime = session.getStartTime();
+			Date endTime = session.getEndTime();			
+			
+			if(startTime.getYear() == date.getYear() && startTime.getMonth() == date.getMonth()) {
+				Map<TimeUnit,Long> times = Utils.computeDiff(startTime, endTime);
+				seconds = seconds + times.get(TimeUnit.SECONDS);
+				minutes = minutes + times.get(TimeUnit.MINUTES);
+				hours = hours + times.get(TimeUnit.HOURS);
+				
+				if(seconds > 59) {
+					long moreSeconds = seconds - 60;
+					long moreMinutes = moreSeconds/60;
+					long newSeconds = moreSeconds % 60;
+					minutes = minutes + moreMinutes + 1;
+					seconds = newSeconds;
+				}
+				
+				if(minutes > 59) {
+					long moreMinutes = minutes - 60;
+					long moreHours = moreMinutes/60;
+					long newMinutes = moreMinutes % 60;
+					hours = hours + moreHours + 1;
+					minutes = newMinutes;
+				}
+			}
+		}
+		
+		time = hours + " hours " + minutes +  " minutes " + seconds + " seconds";
+		return time;
+	}
+	
+	public double getMonthlyIncome() {
+		double totalIncome = 0;
+		Date date = new Date();
+		
+		for(IncomeTransaction transaction : incomeTransactions) {
+			if(transaction.getDate().getMonth() == date.getMonth() && transaction.getDate().getYear() == date.getYear()) {
+				totalIncome = totalIncome + transaction.getIncome();
+			}
+		}
+		
+		return totalIncome;
 	}
 }

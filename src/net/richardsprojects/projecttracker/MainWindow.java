@@ -15,11 +15,13 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
@@ -91,8 +93,8 @@ public class MainWindow extends JFrame {
 		
 		if(Main.projects.size() > 0) {
 			JPanel projectsList = new JPanel();
-			projectsList.setLayout(new BoxLayout(projectsList, BoxLayout.PAGE_AXIS));
 			projectsList.setBorder(new EmptyBorder(8, 8, 8, 8));
+			projectsList.setLayout(new BoxLayout(projectsList, BoxLayout.PAGE_AXIS));
 			int totalProjects = 0;
 			for(final Project p : Main.projects) {
 				boolean shouldDisplay = false;
@@ -131,23 +133,31 @@ public class MainWindow extends JFrame {
 					informationPanel.setLayout(new BoxLayout(informationPanel, BoxLayout.PAGE_AXIS));
 					
 					JLabel blankLabel = new JLabel(" ");
+					blankLabel.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
 					Date dateAdded = p.getDateAdded();
 					DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 					String dateInfo = "Date Added: " + dateFormat.format(dateAdded);
 					JLabel dateLabel = new JLabel(dateInfo);
 					dateLabel.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
-					informationPanel.add(dateLabel);
-					informationPanel.add(blankLabel);
 					JLabel totalTime = new JLabel("Total Time: " + p.getTotalTime());
-					totalTime.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
+					totalTime.setFont(new Font(projectTitle.getFont().getName(), Font.BOLD, 14));
 					JLabel totalIncome = new JLabel("Total Income: $" + p.getTotalIncome());
-					totalIncome.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
+					totalIncome.setFont(new Font(projectTitle.getFont().getName(), Font.BOLD, 14));
 					JLabel status = new JLabel("Status: " + ProjectStatus.getName(p.getProjectStatus()));
 					status.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
-					informationPanel.add(totalTime);
-					informationPanel.add(blankLabel);
-					informationPanel.add(totalIncome);
+					JLabel monthlyTime = new JLabel("Monthly Time: " + p.getMonthlyTime());
+					monthlyTime.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
+					JLabel monthlyIncome = new JLabel("Monthly Income: $" + p.getMonthlyIncome());
+					monthlyIncome.setFont(new Font(projectTitle.getFont().getName(), Font.PLAIN, 14));
+					
+					informationPanel.add(dateLabel);
 					informationPanel.add(status);
+					informationPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+					informationPanel.add(monthlyTime);
+					informationPanel.add(monthlyIncome);
+					informationPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+					informationPanel.add(totalTime);
+					informationPanel.add(totalIncome);
 					
 					//Setup panel
 					projectPanel.add(titlePanel, BorderLayout.PAGE_START);
@@ -161,7 +171,10 @@ public class MainWindow extends JFrame {
 					projectsList.add(separator);				
 				}
 			}
-			mainJPanel.add(projectsList, BorderLayout.CENTER);
+			JScrollPane projectsListPane = new JScrollPane(projectsList);
+			projectsListPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+			projectsListPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			mainJPanel.add(projectsListPane, BorderLayout.CENTER);
 		}
 		
 		add(mainJPanel);

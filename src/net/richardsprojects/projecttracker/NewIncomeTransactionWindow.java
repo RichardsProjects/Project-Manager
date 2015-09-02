@@ -63,7 +63,7 @@ public class NewIncomeTransactionWindow extends JFrame {
 	    saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					int money = Integer.parseInt(textField.getText());
+					double money = Double.parseDouble(textField.getText());
 					project.addIncomeTransactionData(money, new Date());
 					Main.mainWindow.updatePanel();
 					dispatchEvent(new WindowEvent(NewIncomeTransactionWindow.this, WindowEvent.WINDOW_CLOSING));

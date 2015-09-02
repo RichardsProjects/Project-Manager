@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class IncomeTransaction {
 	
-	private int income;
+	private double income;
 	private Date date;
 	
-	public IncomeTransaction(int income, Date date) {
+	public IncomeTransaction(double income, Date date) {
 		this.income = income;
 		this.date = date;
 	}
@@ -16,7 +16,7 @@ public class IncomeTransaction {
 		return this.date;
 	}
 	
-	public int getIncome() {
+	public double getIncome() {
 		return this.income;
 	}
 
