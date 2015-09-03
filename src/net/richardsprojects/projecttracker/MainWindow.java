@@ -11,12 +11,18 @@ import java.awt.MenuItem;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,6 +43,14 @@ public class MainWindow extends JFrame {
 		super("Project Manager");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
+		BufferedImage icon;
+		try {
+			icon = ImageIO.read(new File("res/icon.png"));
+			setIconImage(icon);
+		} catch (Exception e) {
+			System.out.println("[WARNING] Unable to load icon");
+		}        
+		
 		//Create Menu
 		MenuBar menubar = new MenuBar();
 		

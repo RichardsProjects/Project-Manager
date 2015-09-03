@@ -68,6 +68,7 @@ public class EditProjectWindow extends JFrame {
 	    button.setMinimumSize(new Dimension(Integer.MAX_VALUE, 20));
 	    button2.setMinimumSize(new Dimension(Integer.MAX_VALUE, 20));
 	    jpanel2.add(button);
+	    jpanel2.add(Box.createRigidArea(new Dimension(0, 10)));
 	    jpanel2.add(button2);
 	    
 	    jpanel2.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -109,7 +110,6 @@ public class EditProjectWindow extends JFrame {
 	    pack();
 	    
 	    //TODO: Make the width calculated properly
-	    //TODO: Make the button centered
 	    setSize(400, 220);
 	    setVisible(true);
 	    setLocationRelativeTo(null);
