@@ -1,11 +1,11 @@
-package net.richardsprojects.projecttracker;
+package net.richardsprojects.projecttracker.data;
 
 import java.util.Date;
 
 public class TimeSession {
 
-	Date startTime;
-	Date endTime;
+	private final Date startTime;
+	private final Date endTime;
 	
 	public TimeSession(Date startTime, Date endTime) {
 		this.startTime = startTime;

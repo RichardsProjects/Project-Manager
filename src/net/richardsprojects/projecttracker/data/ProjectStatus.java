@@ -1,4 +1,4 @@
-package net.richardsprojects.projecttracker;
+package net.richardsprojects.projecttracker.data;
 
 public enum ProjectStatus {
 	IN_PROGRESS, PRIORITY, FINISHED;
@@ -34,6 +34,18 @@ public enum ProjectStatus {
 			return "Priority";
 		} else if(type == ProjectStatus.FINISHED) {
 			return "Completed";
+		} else {
+			return null;
+		}
+	}
+
+	public static ProjectStatus getEnumFromName(String name) {
+		if(name.equals("In Progress")) {
+			return ProjectStatus.IN_PROGRESS;
+		} else if(name.equals("Priority")) {
+			return ProjectStatus.PRIORITY;
+		} else if(name.equals("Completed")) {
+			return ProjectStatus.FINISHED;
 		} else {
 			return null;
 		}

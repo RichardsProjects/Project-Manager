@@ -1,29 +1,29 @@
 package net.richardsprojects.projecttracker.actionlisteners;
 
+import net.richardsprojects.projecttracker.Main;
+import net.richardsprojects.projecttracker.data.ProjectStatus;
+import net.richardsprojects.projecttracker.windows.EditProjectWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import net.richardsprojects.projecttracker.EditProjectWindow;
-import net.richardsprojects.projecttracker.Main;
-import net.richardsprojects.projecttracker.ProjectStatus;
-
 public class ProjectStatusButtons implements ActionListener {
 
-	private EditProjectWindow window;
+	private final EditProjectWindow window;
 	
 	public ProjectStatusButtons(EditProjectWindow window) {
 		this.window = window;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand().equals("1")) {
-			window.project.setProjectStatus(ProjectStatus.IN_PROGRESS);
+		if (e.getActionCommand().equals("1")) {
+			window.getProject().setProjectStatus(ProjectStatus.IN_PROGRESS);
 			Main.mainWindow.updatePanel();
-		} else if(e.getActionCommand().equals("2")) {
-			window.project.setProjectStatus(ProjectStatus.PRIORITY);
+		} else if (e.getActionCommand().equals("2")) {
+			window.getProject().setProjectStatus(ProjectStatus.PRIORITY);
 			Main.mainWindow.updatePanel();
-		} else if(e.getActionCommand().equals("3")) {
-			window.project.setProjectStatus(ProjectStatus.FINISHED);
+		} else if (e.getActionCommand().equals("3")) {
+			window.getProject().setProjectStatus(ProjectStatus.FINISHED);
 			Main.mainWindow.updatePanel();
 		}
 	}

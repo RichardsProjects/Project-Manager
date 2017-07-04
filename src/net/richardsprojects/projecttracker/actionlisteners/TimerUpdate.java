@@ -1,13 +1,13 @@
 package net.richardsprojects.projecttracker.actionlisteners;
 
+import net.richardsprojects.projecttracker.windows.NewTimeSessionWindow;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import net.richardsprojects.projecttracker.NewTimeSessionWindow;
-
 public class TimerUpdate implements ActionListener {
 
-	private NewTimeSessionWindow window;
+	private final NewTimeSessionWindow window;
 	
 	public TimerUpdate(NewTimeSessionWindow window) {
 		this.window = window;

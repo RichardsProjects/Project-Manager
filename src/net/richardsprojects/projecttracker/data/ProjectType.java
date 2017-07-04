@@ -1,4 +1,4 @@
-package net.richardsprojects.projecttracker;
+package net.richardsprojects.projecttracker.data;
 
 public enum ProjectType {
 	PERSONAL_PROJECT, FREELANCE_JOB, PREMIUM_PLUGIN;
@@ -34,6 +34,18 @@ public enum ProjectType {
 			return "Freelance Job";
 		} else if(type == ProjectType.PREMIUM_PLUGIN) {
 			return "Premium Plugin";
+		} else {
+			return null;
+		}
+	}
+
+	public static ProjectType getEnumFromName(String name) {
+		if(name.equals("Personal Project")) {
+			return ProjectType.PERSONAL_PROJECT;
+		} else if(name.equals("Freelance Job")) {
+			return ProjectType.FREELANCE_JOB;
+		} else if(name.equals("Premium Plugin")) {
+			return ProjectType.PREMIUM_PLUGIN;
 		} else {
 			return null;
 		}

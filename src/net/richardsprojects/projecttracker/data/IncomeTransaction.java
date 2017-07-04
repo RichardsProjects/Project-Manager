@@ -1,11 +1,11 @@
-package net.richardsprojects.projecttracker;
+package net.richardsprojects.projecttracker.data;
 
 import java.util.Date;
 
 public class IncomeTransaction {
 	
-	private double income;
-	private Date date;
+	private final double income;
+	private final Date date;
 	
 	public IncomeTransaction(double income, Date date) {
 		this.income = income;
