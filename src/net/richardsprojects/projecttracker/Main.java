@@ -32,6 +32,8 @@ public class Main {
 	private static File dataDirectory;
 	
 	public static Screens currentScreen = Screens.IN_PROGRESS;
+	public static Project historyProject = null;
+	public static Screens previousScreen = null;
 
 	public static final SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
