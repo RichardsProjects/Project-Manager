@@ -16,15 +16,27 @@ public class SplashWindow extends JFrame {
 
     public SplashWindow(BufferedImage bg) {
         super("Splash");
-        panel = new JPanel();
-
-        setPreferredSize(new Dimension(300, 120));
-        setSize(new Dimension(300, 120));
         setUndecorated(true);
+
+        panel = new JPanel();
+        panel.setLayout(new BorderLayout(2,2));
+        panel.setBackground(Color.decode("#3238b8"));
+
+        JLabel text = new JLabel("Developed by Richard Bimmer");
+        text.setForeground(Color.WHITE);
+        text.setBorder(BorderFactory.createEmptyBorder(5, 5,5 ,5));
+        panel.add(text, BorderLayout.PAGE_START);
+
+        JLabel text2 = new JLabel("(C) 2015 - 2018");
+        text2.setForeground(Color.WHITE);
+        text2.setBorder(BorderFactory.createEmptyBorder(5, 5,5 ,5));
+        panel.add(text2, BorderLayout.PAGE_END);
 
         JLabel backgroundLabel = new JLabel();
         if (bg != null) backgroundLabel.setIcon(new ImageIcon(bg));
-        panel.add(backgroundLabel);
+        backgroundLabel.setPreferredSize(new Dimension(300, 85));
+        backgroundLabel.setSize(new Dimension(300, 85));
+        panel.add(backgroundLabel, BorderLayout.LINE_START);
         setContentPane(panel);
 
         pack();
