@@ -39,7 +39,7 @@ public class Main {
 
 	public static boolean closeRequested = false;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		// create splash window
 		BufferedImage bg = null;
 		try {
@@ -57,7 +57,16 @@ public class Main {
 		
 		// create data directory if it doesn't already exist
 		if(!dataDirectory.exists()) dataDirectory.mkdirs(); 
-		
+
+		// check for alternate path
+		File alternatePath = new File(dataDirectory, ".alternatePath");
+		if (alternatePath.exists()) {
+			String path = (new String(Files.readAllBytes(Paths.get(alternatePath.getAbsolutePath())), StandardCharsets.UTF_8)).trim();
+			System.out.println(path);
+			dataDirectory = new File(path);
+			if (!dataDirectory.exists()) dataDirectory.mkdirs();
+		}
+
 		// load all projects
 		File projectFile = new File(dataDirectory, "projects.json");
 		if (projectFile.exists()) {
@@ -173,7 +182,7 @@ public class Main {
 		String result = json.toString(4);
 		FileWriter file;
 		try {
-			file = new FileWriter(defaultDirectory() + File.separator + "projects.json");
+			file = new FileWriter(dataDirectory + File.separator + "projects.json");
 			file.write(result);
 			file.flush();
 			file.close();
