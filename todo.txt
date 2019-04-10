@@ -1,8 +1,8 @@
 1.0:
 [ ] Add the ability to manage Project Types (will be stored in the Projects folder)
 [ ] Make the alternate path be editable in the settings
-[ ] Check for presence of .lock file and do not launch if it is there
-    [ ]  Delete .lock file when the application is closed
+[X] Check for presence of .lock file and do not launch if it is there
+    [X]  Delete .lock file when the application is closed
 [ ] Save all data to disk anytime a project is saved (on a separate thread)
 [ ] Save information related to the last in progress time session every minute (delete it once it is saved)
 [ ] If there is a saved time session offer to recover, discard or ignore it when the program opens

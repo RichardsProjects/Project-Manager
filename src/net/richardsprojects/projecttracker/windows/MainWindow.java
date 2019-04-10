@@ -81,6 +81,7 @@ public class MainWindow extends JFrame {
 					Main.currentDialog.dispatchEvent(new WindowEvent(Main.currentDialog, WindowEvent.WINDOW_CLOSING));
 				} else {
 					Main.save();
+					Main.deleteLockFile();
 					System.exit(0);
 				}
 			}

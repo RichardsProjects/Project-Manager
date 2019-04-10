@@ -73,7 +73,25 @@ public class Main {
             }
 		}
 
-		// TODO: Look for a .lock file and stop the application if there is one
+		// create the alternate path if it doesn't already exist
+		if(!dataDirectory.exists()) dataDirectory.mkdirs();
+
+		// look for a .lock file and stop the application if there is one
+		File lockFile = new File(dataDirectory, ".lock");
+		if (lockFile.exists()) {
+			JOptionPane.showMessageDialog(null,
+					"An instance of the program is already running. Please close the program and try again.",
+					"ProjectManager Error",
+					JOptionPane.ERROR_MESSAGE);
+			System.exit(0);
+		} else {
+			// create the lock file
+			try {
+				lockFile.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 		// load all projects
 		File projectFile = new File(dataDirectory, "projects.json");
@@ -152,6 +170,15 @@ public class Main {
             }
         });
 
+	}
+
+	public static void deleteLockFile() {
+		try {
+			File lockFile = new File(dataDirectory, ".lock");
+			lockFile.delete();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void save() {
