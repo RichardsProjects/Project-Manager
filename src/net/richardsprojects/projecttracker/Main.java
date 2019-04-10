@@ -30,6 +30,7 @@ public class Main {
 	public static List<Project> projects;
 	
 	private static File dataDirectory;
+	public static boolean alternateDirectorySet = false;
 	
 	public static Screens currentScreen = Screens.IN_PROGRESS;
 	public static Project historyProject = null;
@@ -39,7 +40,7 @@ public class Main {
 
 	public static boolean closeRequested = false;
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// create splash window
 		BufferedImage bg = null;
 		try {
@@ -58,14 +59,21 @@ public class Main {
 		// create data directory if it doesn't already exist
 		if(!dataDirectory.exists()) dataDirectory.mkdirs(); 
 
+		// TODO: Add a settings menu to specify/change the "alternate path"
 		// check for alternate path
 		File alternatePath = new File(dataDirectory, ".alternatePath");
 		if (alternatePath.exists()) {
-			String path = (new String(Files.readAllBytes(Paths.get(alternatePath.getAbsolutePath())), StandardCharsets.UTF_8)).trim();
-			System.out.println(path);
-			dataDirectory = new File(path);
-			if (!dataDirectory.exists()) dataDirectory.mkdirs();
+		    try {
+                String path = (new String(Files.readAllBytes(Paths.get(alternatePath.getAbsolutePath())), StandardCharsets.UTF_8)).trim();
+                dataDirectory = new File(path);
+                alternateDirectorySet = true;
+                if (!dataDirectory.exists()) dataDirectory.mkdirs();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 		}
+
+		// TODO: Look for a .lock file and stop the application if there is one
 
 		// load all projects
 		File projectFile = new File(dataDirectory, "projects.json");
