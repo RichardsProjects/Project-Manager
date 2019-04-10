@@ -27,7 +27,7 @@ public class SplashWindow extends JFrame {
         text.setBorder(BorderFactory.createEmptyBorder(5, 5,5 ,5));
         panel.add(text, BorderLayout.PAGE_START);
 
-        JLabel text2 = new JLabel("(C) 2015 - 2018");
+        JLabel text2 = new JLabel("(C) 2015 - 2019");
         text2.setForeground(Color.WHITE);
         text2.setBorder(BorderFactory.createEmptyBorder(5, 5,5 ,5));
         panel.add(text2, BorderLayout.PAGE_END);

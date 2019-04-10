@@ -69,7 +69,7 @@ public class Main {
                 alternateDirectorySet = true;
                 if (!dataDirectory.exists()) dataDirectory.mkdirs();
             } catch (IOException e) {
-                e.printStackTrace();
+                reportFatalException(e);
             }
 		}
 
@@ -89,9 +89,17 @@ public class Main {
 			try {
 				lockFile.createNewFile();
 			} catch (IOException e) {
-				e.printStackTrace();
+				reportFatalException(e);
 			}
 		}
+
+		// add a runtime hook that will if possible gracefully save and exit
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			public void run() {
+				Main.save();
+				Main.deleteLockFile();
+			}
+		});
 
 		// load all projects
 		File projectFile = new File(dataDirectory, "projects.json");
@@ -154,7 +162,7 @@ public class Main {
 					projects.add(project);
 				}
 			} catch (IOException e) {
-				e.printStackTrace();
+				reportFatalException(e);
 			}
 		} else {
 			System.out.println("projects.json could not be found.");
@@ -223,7 +231,7 @@ public class Main {
 			file.close();
 			System.out.println("Exiting...");
 		} catch (IOException e) {
-			e.printStackTrace();
+			reportFatalException(e);
 		}
 	}
 
@@ -241,6 +249,14 @@ public class Main {
 		}
 
 		return System.getProperty("user.dir") + File.separator + "ProjectManager";
+	}
+
+	private static void reportFatalException(Exception e) {
+		JOptionPane.showMessageDialog(null,
+				"A fatal exception occurred: \n\n" + e.toString(),
+				"ProjectManager Error",
+				JOptionPane.ERROR_MESSAGE);
+		System.exit(0);
 	}
 
 }
